@@ -6,17 +6,19 @@
     <persistence-unit name="default">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-        <!--        <class>entity.Matches</class>-->
-        <!--        <class>entity.Players</class>-->
-        <class>entity.User</class>
+                <class>entity.Match</class>
+                <class>entity.Player</class>
 
         <properties>
             <!-- H2 Database -->
-            <property name="jakarta.persistence.jdbc.driver" value="org.h2.Driver"/>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:mem:db"/>
-            <property name="jakarta.persistence.jdbc.user" value="sa"/>
-            <property name="jakarta.persistence.jdbc.password" value=""/>
-
+<!--            <property name="jakarta.persistence.jdbc.driver" value="org.h2.Driver"/>-->
+            <!--            <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:mem:db"/>-->
+<!--            <property name="jakarta.persistence.jdbc.user" value="sa"/>-->
+<!--            <property name="jakarta.persistence.jdbc.password" value=""/>-->
+            <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/postgres"/>
+            <property name="jakarta.persistence.jdbc.user" value="postgres"/>
+            <property name="jakarta.persistence.jdbc.password" value="postgres"/>
             <!-- Hibernate -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>

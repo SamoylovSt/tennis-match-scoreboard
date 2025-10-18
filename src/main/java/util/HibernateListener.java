@@ -13,10 +13,11 @@ public class HibernateListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
-
-        try (EntityManager em = emf.createEntityManager()) {
+        JPAUtil.initialize(emf);
+//        try (EntityManager em = emf.createEntityManager()) {
             System.out.println("Hibernate initialized successfully on Tomcat");
-            sce.getServletContext().setAttribute("emf", emf);
-        }
+//            sce.getServletContext().setAttribute("emf", emf);
+//        }
+
     }
 }
