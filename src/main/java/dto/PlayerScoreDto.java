@@ -6,7 +6,7 @@ public class PlayerScoreDto {
     private int games;
     private int points;
 
-    public PlayerScoreDto(String name, int sets, int games, int points) {
+    public PlayerScoreDto(String name, int sets, int games, int points, String name2, int sets2, int games2, int points2) {
         this.name = name;
         this.sets = sets;
         this.games = games;

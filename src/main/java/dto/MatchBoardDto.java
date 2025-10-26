@@ -9,6 +9,6 @@ public class MatchBoardDto {
 
     private PlayerScoreDto playerScoreDto1;
     private PlayerScoreDto playerScoreDto2;
-
+    
 
 }

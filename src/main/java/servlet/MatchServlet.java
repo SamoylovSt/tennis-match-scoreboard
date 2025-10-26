@@ -1,24 +1,22 @@
 package servlet;
 
-import dto.MatchBoardDto;
 import dto.PlayerNameDto;
-import entity.Player;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.PlayerService;
+import util.PlayerScoreDtoManager;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 @WebServlet("/new-match")
 public class MatchServlet extends HttpServlet {
 
     PlayerService playerService = new PlayerService();
+    PlayerScoreDtoManager manager = PlayerScoreDtoManager.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,6 +30,7 @@ public class MatchServlet extends HttpServlet {
         String playerOne = req.getParameter("playerOne");
         String playerTwo = req.getParameter("playerTwo");
 
+
         System.out.println("player one: " + playerOne + " player two: " + playerTwo);
         PlayerNameDto p1 = new PlayerNameDto();
         p1.setName(playerOne);
@@ -39,10 +38,12 @@ public class MatchServlet extends HttpServlet {
         p2.setName(playerTwo);
         playerService.createPlayer(p1);
         playerService.createPlayer(p2);
-        resp.sendRedirect("match-score.jsp");
-
-        // Map<UUID, MatchBoardDto> currentMatch = new HashMap<>();
 
 
+        UUID key = UUID.randomUUID();
+
+
+        manager.setPlayerScoreDto(key, playerOne, playerTwo);
+        resp.sendRedirect("/match-score?uuid=" + key.toString());
     }
 }

@@ -34,38 +34,47 @@
     <div class="container">
         <h1>Current match</h1>
         <div class="current-match-image"></div>
-        <section class="score">
-            <table class="table">
-                <thead class="result">
-                <tr>
-                    <th class="table-text">Player</th>
-                    <th class="table-text">Sets</th>
-                    <th class="table-text">Games</th>
-                    <th class="table-text">Points</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr class="player1">`
-                    <td class="table-text">${player1.name}</td>
-                    <td class="table-text">${player1.sets}</td>
-                    <td class="table-text">${player1.games}</td>
-                    <td class="table-text">${player1.points}</td>
-                    <td class="table-text">
-                        <div class="score-btn">Score</div>
-                    </td>
-                </tr>
-                <tr class="player2">
-                    <td class="table-text">Roger Federer</td>
-                    <td class="table-text">2</td>
-                    <td class="table-text">3</td>
-                    <td class="table-text">15</td>
-                    <td class="table-text">
-                        <div class="score-btn">Score</div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </section>
+<section class="score">
+    <table class="table">
+        <thead class="result">
+        <tr>
+            <th class="table-text">Player</th>
+            <th class="table-text">Sets</th>
+            <th class="table-text">Games</th>
+            <th class="table-text">Points</th>
+            <th class="table-text">Action</th> <!-- Добавлен заголовок для кнопок -->
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="player1">
+            <td class="table-text">${player1.name}</td>
+            <td class="table-text">${player1.sets}</td>
+            <td class="table-text">${player1.games}</td>
+            <td class="table-text">${player1.points}</td>
+            <td class="table-text">
+                <form action="/match-score" method="post" style="display: inline;">
+                    <input type="hidden" name="player" value="player1">
+                    <input type="hidden" name="uuid" value="${matchUuid}">
+                    <button type="submit" class="score-btn">Score</button>
+                </form>
+            </td>
+        </tr>
+        <tr class="player2">
+            <td class="table-text">${player2.name}</td>
+            <td class="table-text">${player2.sets}</td>
+            <td class="table-text">${player2.games}</td>
+            <td class="table-text">${player2.points}</td>
+            <td class="table-text">
+                <form action="/match-score" method="post" style="display: inline;">
+                    <input type="hidden" name="player" value="player2">
+                    <input type="hidden" name="uuid" value="${matchUuid}">
+                    <button type="submit" class="score-btn">Score</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
     </div>
 </main>
 <footer>
