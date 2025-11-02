@@ -1,5 +1,6 @@
 package entity;
 
+import dto.PlayerNameDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,6 +33,8 @@ public class Player {
 
     @OneToMany(mappedBy = "winner")
     private List<Match> winner= new ArrayList<>();
+
+
 
 }
 

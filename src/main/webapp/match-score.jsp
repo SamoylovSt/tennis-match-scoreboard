@@ -42,7 +42,7 @@
             <th class="table-text">Sets</th>
             <th class="table-text">Games</th>
             <th class="table-text">Points</th>
-            <th class="table-text">Action</th> <!-- Добавлен заголовок для кнопок -->
+        <!--    <th class="table-text">Action</th>  Добавлен заголовок для кнопок -->
         </tr>
         </thead>
         <tbody>

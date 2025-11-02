@@ -1,5 +1,7 @@
 package dto;
 
+import entity.Player;
+
 public class PlayerScoreDto {
     private String name;
     private int sets;
@@ -46,5 +48,14 @@ public class PlayerScoreDto {
 
     public void setPoints(int points) {
         this.points = points;
+    }
+
+    public PlayerNameDto convertToPlayerNameDto(PlayerScoreDto player){
+
+        PlayerNameDto playerNameDto= new PlayerNameDto();
+
+        playerNameDto.setName(player.getName());
+        return playerNameDto;
+
     }
 }

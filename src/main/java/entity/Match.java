@@ -16,6 +16,7 @@ public class Match {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
+
     @ManyToOne
     @JoinColumn(name = "player1", referencedColumnName = "id")
     private Player player1;

@@ -30,10 +30,9 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.postgresql/postgresql
     implementation("org.postgresql:postgresql:42.7.3")
+    implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0'
+    implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1'
 
-    // https://mvnrepository.com/artifact/javax.servlet/jstl
-    // implementation("javax.servlet:jstl:1.2")
-    //compileOnly 'javax.servlet.jsp:javax.servlet.jsp-api:2.3.3'
 
     compileOnly("org.projectlombok:lombok:1.18.42")
     annotationProcessor("org.projectlombok:lombok:1.18.42")

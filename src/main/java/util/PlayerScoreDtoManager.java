@@ -27,7 +27,6 @@ public class PlayerScoreDtoManager {
     }
 
     public void setPlayerScoreDto(UUID key, String player1Name, String player2Name) {
-
         PlayerScoreDto player = new PlayerScoreDto();
         player.setName(player1Name);
         player.setSets(0);
@@ -44,7 +43,12 @@ public class PlayerScoreDtoManager {
         matchBoardDto.setPlayerScoreDto2(player2);
 
         matchCollection.put(key, matchBoardDto);
+    }
 
+    public void deleteCurrentMatch(String key){
+
+        matchCollection.remove(key);
+        System.out.println(matchCollection.get("delete"+key));
 
     }
 }

@@ -21,7 +21,7 @@ public class MatchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("new-match.html").forward(req, resp);
-        System.out.println("get servlet");
+        System.out.println("get servlet MatchServlet");
     }
 
     @Override
@@ -40,10 +40,9 @@ public class MatchServlet extends HttpServlet {
         playerService.createPlayer(p2);
 
 
-        UUID key = UUID.randomUUID();
+        UUID uuid = UUID.randomUUID();
 
-
-        manager.setPlayerScoreDto(key, playerOne, playerTwo);
-        resp.sendRedirect("/match-score?uuid=" + key.toString());
+        manager.setPlayerScoreDto(uuid, playerOne, playerTwo);
+        resp.sendRedirect("/match-score?uuid=" + uuid.toString());
     }
 }
