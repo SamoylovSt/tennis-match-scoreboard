@@ -14,8 +14,6 @@ public class CharsetFilter extends HttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
-//        res.setContentType("text/html");
-//        res.setCharacterEncoding("UTF-8");
 
         if (req.getCharacterEncoding() == null) {
             req.setCharacterEncoding("UTF-8");

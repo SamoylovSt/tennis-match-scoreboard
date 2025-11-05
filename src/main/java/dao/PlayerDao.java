@@ -27,9 +27,7 @@ public class PlayerDao {
             }
             return null;
         }
-//        finally {
-//            em.close();
-//        }
+
     }
 
     public void createPlayer(PlayerNameDto playerDto) {
@@ -44,12 +42,8 @@ public class PlayerDao {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-//        finally {
-//            em.close();
-//        }
+
     }
-
-
 }
 
 

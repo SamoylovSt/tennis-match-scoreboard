@@ -1,6 +1,5 @@
 package entity;
 
-import dto.PlayerNameDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,15 +23,15 @@ public class Player {
 
     @Column(name="name")
     private String name;
-
-    @OneToMany(mappedBy = "player1")
-    private List<Match> matchesPlayer1= new ArrayList<>();
-
-    @OneToMany(mappedBy = "player2")
-    private List<Match> matchesPlayer2= new ArrayList<>();
-
-    @OneToMany(mappedBy = "winner")
-    private List<Match> winner= new ArrayList<>();
+// не обзательные поля
+//    @OneToMany(mappedBy = "player1")
+//    private List<Match> matchesPlayer1= new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "player2")
+//    private List<Match> matchesPlayer2= new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "winner")
+//    private List<Match> winner= new ArrayList<>();
 
 
 

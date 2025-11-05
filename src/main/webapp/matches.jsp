@@ -23,8 +23,8 @@
         </div>
         <div>
             <nav class="nav-links">
-                <a class="nav-link" href="#">Home</a>
-                <a class="nav-link" href="#">Matches</a>
+                <a class="nav-link" href="/index.html">Home</a>
+                <a class="nav-link" href="/matches">Matches</a>
             </nav>
         </div>
     </section>
@@ -60,14 +60,40 @@
             </c:forEach>
         </table>
 
-        <div class="pagination">
-            <a class="prev" href="#"> < </a>
-            <a class="num-page current" href="#">1</a>
-            <a class="num-page" href="#">2</a>
-            <a class="num-page" href="#">3</a>
-            <a class="next" href="#"> > </a>
-        </div>
-    </div>
+  <!-- Пагинация -->
+  <div class="pagination">
+      <!-- Кнопка "Назад" -->
+      <c:choose>
+          <c:when test="${currentPage > 1}">
+              <a class="prev" href="?page=${currentPage - 1}"> &lt; </a>
+          </c:when>
+          <c:otherwise>
+              <span class="prev disabled"> &lt; </span>
+          </c:otherwise>
+      </c:choose>
+
+      <!-- Номера страниц -->
+      <c:forEach begin="1" end="${totalPages}" var="i">
+          <c:choose>
+              <c:when test="${i == currentPage}">
+                  <span class="num-page current">${i}</span>
+              </c:when>
+              <c:otherwise>
+                  <a class="num-page" href="?page=${i}">${i}</a>
+              </c:otherwise>
+          </c:choose>
+      </c:forEach>
+
+      <!-- Кнопка "Вперед" -->
+      <c:choose>
+          <c:when test="${currentPage < totalPages}">
+              <a class="next" href="?page=${currentPage + 1}"> &gt; </a>
+          </c:when>
+          <c:otherwise>
+              <span class="next disabled"> &gt; </span>
+          </c:otherwise>
+      </c:choose>
+  </div>
 </main>
 <footer>
     <div class="footer">

@@ -1,5 +1,9 @@
 package dao;
 
-public interface InterfaceDao {
+import dto.PlayerNameDto;
+import entity.Player;
 
+public interface InterfaceDao {
+    public Player findPlayerByName(PlayerNameDto player1);
+    //понять нахуй мне интерфейс
 }

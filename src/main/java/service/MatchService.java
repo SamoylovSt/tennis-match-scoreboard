@@ -16,14 +16,13 @@ import java.util.UUID;
 public class MatchService {
     PlayerDao playerDao = new PlayerDao();
     MatchDao matchDao = new MatchDao();
-    //PlayerService playerService = new PlayerService();
-    //ошибка когда в одном сервисе вызывается другой
-//
+
     PlayerScoreDtoManager manager = PlayerScoreDtoManager.getInstance();
 
-    //
+
     public void saveMatch(String keyMatch) {
         Match matchForSave = new Match();
+        System.out.println(" in saveMatch service");
         PlayerScoreDto player1 = manager.getMatchBoardDtoForId(UUID.fromString(keyMatch)).getPlayerScoreDto1();
         PlayerScoreDto player2 = manager.getMatchBoardDtoForId(UUID.fromString(keyMatch)).getPlayerScoreDto2();
         Player playerForMatch1 = playerDao.findPlayerByName(player1.convertToPlayerNameDto(player1));
@@ -32,10 +31,14 @@ public class MatchService {
         matchForSave.setPlayer1(playerForMatch1);
         matchForSave.setPlayer2(playerForMatch2);
         matchForSave.setWinner(winner);
+//        if ( playerForMatch1==null || playerForMatch2==null){
+//            throw new RuntimeException("Player not found");
+//        }
+        System.out.println("saveMatch service complete");
         matchDao.createMatch(matchForSave);
     }
 
-    //
+
     public List<MatchListDto> getMatchForName(String name) {
 
         PlayerNameDto playerNameDto = new PlayerNameDto();
@@ -67,4 +70,35 @@ public class MatchService {
         }
         return matchListDto;
     }
+
+
+    public List<MatchListDto> getAllMatchPagination(int page, int pageSize) {
+        List<Match> matches = matchDao.getAllMatchesPagination(page,pageSize);
+        List<MatchListDto> matchListDto = new ArrayList<>();
+
+        for (Match m : matches) {
+            MatchListDto matchListDto1 = new MatchListDto();
+            matchListDto1.setPlayerOneName(m.getPlayer1().getName());
+            matchListDto1.setPlayerTwoName(m.getPlayer2().getName());
+            matchListDto1.setWinnerName(m.getWinner().getName());
+            matchListDto.add(matchListDto1);
+        }
+        return matchListDto;
+    }
+
+    public int getTotalMatch() {
+        List<Match> matches = matchDao.getAllMatches();
+        List<MatchListDto> matchListDto = new ArrayList<>();
+    int count=0;
+        for (Match m : matches) {
+            MatchListDto matchListDto1 = new MatchListDto();
+            matchListDto1.setPlayerOneName(m.getPlayer1().getName());
+            matchListDto1.setPlayerTwoName(m.getPlayer2().getName());
+            matchListDto1.setWinnerName(m.getWinner().getName());
+            matchListDto.add(matchListDto1);
+            count++;
+        }
+        return count;
+    }
+
 }

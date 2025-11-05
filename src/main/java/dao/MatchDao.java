@@ -42,7 +42,6 @@ public class MatchDao {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            // ВАЖНО: Выведите полную информацию об ошибке
             System.err.println("Error in getMatchesForId: " + e.getMessage());
             e.printStackTrace();
             throw new RuntimeException("Failed to get matches for id: " + id + ", Error: " + e.getMessage());
@@ -65,4 +64,26 @@ public class MatchDao {
             throw new RuntimeException();
         }
     }
+
+
+    public List<Match> getAllMatchesPagination(int page, int pageSize) {
+
+        EntityManager em = JPAUtil.getEntutyManager();
+        try {
+            em.getTransaction().begin();
+
+            TypedQuery<Match> query = em.createQuery("FROM Match ORDER BY id DESC", Match.class);
+            query.setFirstResult((page - 1) * pageSize);
+            query.setMaxResults(pageSize);
+            List<Match> matches = query.getResultList();
+
+            em.getTransaction().commit();
+            return matches;
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw new RuntimeException();
+        }
+    }
+
+
 }
