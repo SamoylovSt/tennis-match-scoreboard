@@ -51,4 +51,10 @@ public class PlayerScoreDtoManager {
         System.out.println(matchCollection.get("delete"+key));
 
     }
+    public void playersSetGamesAndPoints0(PlayerScoreDto player1, PlayerScoreDto player2 ){
+        player1.setGames(0);
+        player1.setPoints(0);
+        player2.setGames(0);
+        player2.setPoints(0);
+    }
 }

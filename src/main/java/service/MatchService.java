@@ -73,7 +73,7 @@ public class MatchService {
 
 
     public List<MatchListDto> getAllMatchPagination(int page, int pageSize) {
-        List<Match> matches = matchDao.getAllMatchesPagination(page,pageSize);
+        List<Match> matches = matchDao.getAllMatchesPagination(page, pageSize);
         List<MatchListDto> matchListDto = new ArrayList<>();
 
         for (Match m : matches) {
@@ -89,7 +89,7 @@ public class MatchService {
     public int getTotalMatch() {
         List<Match> matches = matchDao.getAllMatches();
         List<MatchListDto> matchListDto = new ArrayList<>();
-    int count=0;
+        int count = 0;
         for (Match m : matches) {
             MatchListDto matchListDto1 = new MatchListDto();
             matchListDto1.setPlayerOneName(m.getPlayer1().getName());

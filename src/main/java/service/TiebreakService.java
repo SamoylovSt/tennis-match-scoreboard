@@ -22,19 +22,13 @@ public class TiebreakService {
 
     public PlayerScoreDto tiebreak(PlayerScoreDto player, String key) {
         PlayerScoreDto temp = new PlayerScoreDto();
-
-        if (player.getPoints() < 30 && player.getGames() <= 7 && player.getSets() != 2) {
-            player.setPoints(player.getPoints() + 15);
-            temp = player;
-        } else if (player.getPoints() == 30) {
-            player.setPoints(player.getPoints() + 10);
-            temp = player;
-        } else if (player.getPoints() == 40 && player.getGames() < 7) {
-            player.setPoints(0);
-            player.setGames(player.getGames() + 1);
-            temp = player;
-        }
+        player.setPoints(player.getPoints()+1);
+        temp=player;
         return temp;
 
     }
+
+
+
 }
+

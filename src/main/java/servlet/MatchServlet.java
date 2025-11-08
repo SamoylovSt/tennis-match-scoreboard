@@ -30,15 +30,27 @@ public class MatchServlet extends HttpServlet {
         String playerOne = req.getParameter("playerOne");
         String playerTwo = req.getParameter("playerTwo");
 
-
         System.out.println("player one: " + playerOne + " player two: " + playerTwo);
+
         PlayerNameDto p1 = new PlayerNameDto();
         p1.setName(playerOne);
-        PlayerNameDto p2 = new PlayerNameDto();
-        p2.setName(playerTwo);
-        playerService.createPlayer(p1);
-        playerService.createPlayer(p2);
 
+        if (!playerOne.equals(playerTwo)) {
+            if (playerService.findPlayerByName(p1) == null) {
+                playerService.createPlayer(p1);
+            } else {
+                p1.setName(playerService.findPlayerByName(p1).getName());
+                System.out.println("### player " + p1 + " already exists ###");
+            }
+            PlayerNameDto p2 = new PlayerNameDto();
+            p2.setName(playerTwo);
+            if (playerService.findPlayerByName(p2) == null) {
+                playerService.createPlayer(p2);
+            } else {
+                p2.setName(playerService.findPlayerByName(p2).getName());
+                System.out.println("### player " + p2 + " already exists ###");
+            }
+        }
 
         UUID uuid = UUID.randomUUID();
 
