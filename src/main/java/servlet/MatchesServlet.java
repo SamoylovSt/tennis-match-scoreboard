@@ -32,7 +32,7 @@ public class MatchesServlet extends HttpServlet {
             page = 1;
         }
 
-        int totalMatches = matchService.getTotalMatch();
+        int totalMatches = matchService.getTotalMatchCount();
         int totalPages = (int) Math.ceil((double) totalMatches / pageSize);
 
 

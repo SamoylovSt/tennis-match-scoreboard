@@ -33,10 +33,10 @@ public class MatchScoreServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String playerButton = req.getParameter("player");
-        MatchBoardDto matchBoardDto = matchScoreService.changeScore(req, resp);
+        String uuid = req.getParameter("uuid");
+        MatchBoardDto matchBoardDto = matchScoreService.changeScore(playerButton,uuid);
         PlayerScoreDto player1 = matchBoardDto.getPlayerScoreDto1();
         PlayerScoreDto player2 = matchBoardDto.getPlayerScoreDto2();
-        String uuid = req.getParameter("uuid");
 
         boolean finishMatchPoints = ((player1.getSets() == 2 ) ||
                 (player2.getSets() == 2));

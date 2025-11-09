@@ -20,7 +20,7 @@ public class MatchServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("new-match.html").forward(req, resp);
+        req.getRequestDispatcher("new-match.jsp").forward(req, resp);
         System.out.println("get servlet MatchServlet");
     }
 
@@ -34,6 +34,7 @@ public class MatchServlet extends HttpServlet {
 
         PlayerNameDto p1 = new PlayerNameDto();
         p1.setName(playerOne);
+
 
         if (!playerOne.equals(playerTwo)) {
             if (playerService.findPlayerByName(p1) == null) {
@@ -50,7 +51,14 @@ public class MatchServlet extends HttpServlet {
                 p2.setName(playerService.findPlayerByName(p2).getName());
                 System.out.println("### player " + p2 + " already exists ###");
             }
+        } else {
+            System.out.println("odinakovoe imya");
+            req.setAttribute("errorMessage", "odinakovoe imya");
+            req.getRequestDispatcher("/new-match.jsp").forward(req, resp);
+         //   req.getRequestDispatcher("/error.jsp").forward(req, resp);
+            throw new IllegalStateException("odinakovoe imya");
         }
+
 
         UUID uuid = UUID.randomUUID();
 

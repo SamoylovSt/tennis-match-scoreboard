@@ -1,4 +1,3 @@
-<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,7 +33,9 @@
             <div class="new-match-image"></div>
             <div class="form-container center">
                 <form method="post" action="/new-match">
-                    <p style="color: red;">Sample error message</p>
+                    <c:if test="${not empty errorMessage}">
+                        <p style="color: red;">${errorMessage}</p>
+                    </c:if>
                     <label class="label-player" for="playerOne">Player one</label>
                     <input class="input-player"
                            id="playerOne"

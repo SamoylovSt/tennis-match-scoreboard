@@ -19,13 +19,12 @@ public class PlayerDao {
             System.out.println(player.getName() + "  name from findPlayerByName");
             em.getTransaction().commit();
             return player;
-        } catch (Exception e) {
-            System.out.println("ERROR in findPlayerByName: " + e.getMessage());
-            e.printStackTrace();
+        } catch (Exception ex) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            return null;
+            throw  new DaoException(ex);
+
         }
 
     }
@@ -39,8 +38,11 @@ public class PlayerDao {
             em.persist(player);
             em.getTransaction().commit();
             System.out.println(findPlayerByName(playerDto) + "созданный игрок");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (Exception ex) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw  new DaoException(ex);
         }
 
     }

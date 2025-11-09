@@ -2,8 +2,6 @@ package service;
 
 import dto.MatchBoardDto;
 import dto.PlayerScoreDto;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import util.PlayerScoreDtoManager;
 
 import java.util.UUID;
@@ -55,9 +53,8 @@ public class MatchScoreService {
     }
 
 
-    public MatchBoardDto changeScore(HttpServletRequest req, HttpServletResponse resp) {
+    public MatchBoardDto changeScore(String playerButton, String uuid) {
         MatchScoreService matchScoreService = new MatchScoreService();
-        String uuid = req.getParameter("uuid");
         System.out.println("UUID: " + uuid);
         MatchBoardDto matchBoardDto = manager.getMatchBoardDtoForId(UUID.fromString(uuid));
         System.out.println("matchBoard: " + matchBoardDto);
@@ -65,10 +62,9 @@ public class MatchScoreService {
         PlayerScoreDto player2 = matchBoardDto.getPlayerScoreDto2();
         System.out.println(player1);
         System.out.println(player2);
-        String playerButton = req.getParameter("player");
 
         boolean goTiebreak = (player1.getGames() == 6) &&
-                 (player2.getGames() == 6);
+                (player2.getGames() == 6);
         if (goTiebreak && tiebreak != 1) {
             tiebreak = 1;
             manager.playersSetGamesAndPoints0(player1, player2);

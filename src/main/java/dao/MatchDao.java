@@ -20,8 +20,11 @@ public class MatchDao {
             System.out.println("match saved");
             em.getTransaction().commit();
 
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (Exception ex) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw  new DaoException(ex);
         }
 
     }
@@ -38,14 +41,11 @@ public class MatchDao {
 
             em.getTransaction().commit();
             return matches;
-        } catch (Exception e) {
+        } catch (Exception ex) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            System.err.println("Error in getMatchesForId: " + e.getMessage());
-            e.printStackTrace();
-            throw new RuntimeException("Failed to get matches for id: " + id + ", Error: " + e.getMessage());
-        }
+            throw  new DaoException(ex);        }
     }
 
     public List<Match> getAllMatches() {
@@ -59,9 +59,11 @@ public class MatchDao {
 
             em.getTransaction().commit();
             return matches;
-        } catch (Exception e) {
-            em.getTransaction().rollback();
-            throw new RuntimeException();
+        } catch (Exception ex) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw  new DaoException(ex);
         }
     }
 
@@ -79,9 +81,11 @@ public class MatchDao {
 
             em.getTransaction().commit();
             return matches;
-        } catch (Exception e) {
-            em.getTransaction().rollback();
-            throw new RuntimeException();
+        } catch (Exception ex) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw  new DaoException(ex);
         }
     }
 

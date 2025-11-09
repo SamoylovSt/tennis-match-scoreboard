@@ -17,8 +17,6 @@ public class PlayerService {
 
 
     public Player findPlayerByName(PlayerNameDto playerNameDto) {
-//        PlayerNameDto playerNameDto = new PlayerNameDto();
-//        playerNameDto.setName(name);
         return playerDao.findPlayerByName(playerNameDto);
     }
 }
