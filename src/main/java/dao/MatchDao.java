@@ -2,6 +2,7 @@ package dao;
 
 import entity.Match;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 import util.JPAUtil;
 
@@ -11,22 +12,20 @@ public class MatchDao {
 
 
     public void createMatch(Match mathForSave) {
-        EntityManager em = JPAUtil.getEntutyManager();
-
-        try {
-            em.getTransaction().begin();
-
-            em.persist(mathForSave);
-            System.out.println("match saved");
-            em.getTransaction().commit();
-
-        } catch (Exception ex) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
+        try (EntityManager em = JPAUtil.getEntutyManager()) {
+            EntityTransaction transaction = em.getTransaction();
+            try {
+                transaction.begin();
+                em.persist(mathForSave);
+                System.out.println("match saved");
+                transaction.commit();
+            } catch (Exception ex) {
+                if (transaction.isActive()) {
+                    transaction.rollback();
+                }
+                throw new DaoException(ex);
             }
-            throw new DaoException(ex);
         }
-
     }
 
     public List<Match> getMatchesForId(int id) {
@@ -65,6 +64,10 @@ public class MatchDao {
                 em.getTransaction().rollback();
             }
             throw new DaoException(ex);
+        }finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
         }
     }
 
@@ -87,6 +90,10 @@ public class MatchDao {
                 em.getTransaction().rollback();
             }
             throw new DaoException(ex);
+        }finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
         }
     }
 

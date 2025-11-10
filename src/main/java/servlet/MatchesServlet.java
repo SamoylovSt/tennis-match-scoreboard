@@ -21,7 +21,7 @@ public class MatchesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         int page = 1;
-        int pageSize = 5; // Количество элементов на странице
+        int pageSize = 5;
 
         try {
             String pageParam = req.getParameter("page");
@@ -39,10 +39,7 @@ public class MatchesServlet extends HttpServlet {
         try {
             String name = req.getParameter("name");
             if (name == null) {
-//                List<MatchListDto> matchesList = matchService.getAllMatch();
-//                req.setAttribute("matches", matchesList);
-//                System.out.println("get servlet MatchesServlet with null parameter");
-//                req.getRequestDispatcher("/matches.jsp").forward(req, resp);
+//
                 List<MatchListDto> matchesList = matchService.getAllMatchPagination(page, pageSize);
 
                 req.setAttribute("matches", matchesList);
@@ -59,7 +56,7 @@ public class MatchesServlet extends HttpServlet {
                 req.getRequestDispatcher("/matches.jsp").forward(req, resp);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new PaginationException(e);
         }
 
     }

@@ -42,6 +42,10 @@ public class ExceptionFilter implements Filter {
         req.setAttribute("errorCode", code);
         req.setAttribute("errorMessage", message);
 
-        req.getRequestDispatcher("/error.jsp").forward(req, resp);
+
+            req.getRequestDispatcher("/error.jsp").forward(req, resp);
+
+
+
     }
 }

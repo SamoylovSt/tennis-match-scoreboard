@@ -28,7 +28,6 @@ dependencies {
     implementation('org.hibernate.validator:hibernate-validator:8.0.1.Final')
     implementation('com.h2database:h2:2.2.224')
 
-    // https://mvnrepository.com/artifact/org.postgresql/postgresql
     implementation("org.postgresql:postgresql:42.7.3")
     implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0'
     implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1'

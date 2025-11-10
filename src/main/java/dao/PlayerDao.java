@@ -21,7 +21,14 @@ public class PlayerDao {
             em.getTransaction().commit();
             return player;
         } catch (NoResultException e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
             return null;
+        }finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
         }
 
 
@@ -41,6 +48,10 @@ public class PlayerDao {
                 em.getTransaction().rollback();
             }
             throw new DaoException(ex);
+        }finally {
+             if (em != null && em.isOpen()) {
+                 em.close();
+             }
         }
 
     }
