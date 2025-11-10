@@ -3,6 +3,7 @@ package dao;
 import dto.PlayerNameDto;
 import entity.Player;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import util.JPAUtil;
 
@@ -19,13 +20,10 @@ public class PlayerDao {
             System.out.println(player.getName() + "  name from findPlayerByName");
             em.getTransaction().commit();
             return player;
-        } catch (Exception ex) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            throw  new DaoException(ex);
-
+        } catch (NoResultException e) {
+            return null;
         }
+
 
     }
 
@@ -37,12 +35,12 @@ public class PlayerDao {
             em.getTransaction().begin();
             em.persist(player);
             em.getTransaction().commit();
-            System.out.println(findPlayerByName(playerDto) + "созданный игрок");
+            System.out.println(findPlayerByName(playerDto) + "player create");
         } catch (Exception ex) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            throw  new DaoException(ex);
+            throw new DaoException(ex);
         }
 
     }

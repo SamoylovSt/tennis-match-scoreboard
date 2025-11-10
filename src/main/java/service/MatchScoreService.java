@@ -63,6 +63,7 @@ public class MatchScoreService {
         System.out.println(player1);
         System.out.println(player2);
 
+
         boolean goTiebreak = (player1.getGames() == 6) &&
                 (player2.getGames() == 6);
         if (goTiebreak && tiebreak != 1) {
@@ -120,6 +121,7 @@ public class MatchScoreService {
         MatchBoardDto matchBoardDto1 = new MatchBoardDto();
         matchBoardDto1.setPlayerScoreDto1(player1);
         matchBoardDto1.setPlayerScoreDto2(player2);
+        matchBoardDto1.setTiebreakOnOff(tiebreak);
 
         return matchBoardDto1;
     }

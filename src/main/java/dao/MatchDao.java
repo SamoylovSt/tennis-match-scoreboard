@@ -24,7 +24,7 @@ public class MatchDao {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            throw  new DaoException(ex);
+            throw new DaoException(ex);
         }
 
     }
@@ -45,7 +45,8 @@ public class MatchDao {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            throw  new DaoException(ex);        }
+            throw new DaoException(ex);
+        }
     }
 
     public List<Match> getAllMatches() {
@@ -63,7 +64,7 @@ public class MatchDao {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            throw  new DaoException(ex);
+            throw new DaoException(ex);
         }
     }
 
@@ -85,7 +86,7 @@ public class MatchDao {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            throw  new DaoException(ex);
+            throw new DaoException(ex);
         }
     }
 

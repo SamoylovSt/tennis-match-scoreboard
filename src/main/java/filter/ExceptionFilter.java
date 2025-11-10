@@ -1,5 +1,6 @@
 package filter;
 
+import dao.DaoException;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,10 +28,12 @@ public class ExceptionFilter implements Filter {
 
     private void exceptionHandle(Exception ex, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        if (ex instanceof MatchesException){
-            redirect(req,resp, HttpServletResponse.SC_NOT_FOUND,"Not found");
-        }else {
-            redirect(req,resp, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Server error");
+        if (ex instanceof MatchesException) {
+            redirect(req, resp, HttpServletResponse.SC_NOT_FOUND, "Not found");
+        } else if (ex instanceof DaoException) {
+            redirect(req, resp, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Dao error");
+        } else {
+            redirect(req, resp, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Server error");
         }
     }
 

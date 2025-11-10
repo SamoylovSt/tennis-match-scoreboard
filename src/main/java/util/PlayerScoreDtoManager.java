@@ -12,7 +12,7 @@ public class PlayerScoreDtoManager {
     private static PlayerScoreDtoManager instance;
     private Map<UUID, MatchBoardDto> matchCollection = new HashMap<>();
 
-    private PlayerScoreDtoManager() {
+    public PlayerScoreDtoManager() {
     }
 
     public static PlayerScoreDtoManager getInstance() {
@@ -20,6 +20,11 @@ public class PlayerScoreDtoManager {
             instance = new PlayerScoreDtoManager();
         }
         return instance;
+    }
+
+    public void putMatchBoardDto(UUID uuid, MatchBoardDto matchBoardDto) {
+
+        matchCollection.put(uuid, matchBoardDto);
     }
 
     public MatchBoardDto getMatchBoardDtoForId(UUID key) {
@@ -45,13 +50,14 @@ public class PlayerScoreDtoManager {
         matchCollection.put(key, matchBoardDto);
     }
 
-    public void deleteCurrentMatch(String key){
+    public void deleteCurrentMatch(String key) {
 
         matchCollection.remove(key);
-        System.out.println(matchCollection.get("delete"+key));
+        System.out.println(matchCollection.get("delete" + key));
 
     }
-    public void playersSetGamesAndPoints0(PlayerScoreDto player1, PlayerScoreDto player2 ){
+
+    public void playersSetGamesAndPoints0(PlayerScoreDto player1, PlayerScoreDto player2) {
         player1.setGames(0);
         player1.setPoints(0);
         player2.setGames(0);

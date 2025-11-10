@@ -55,7 +55,7 @@ public class MatchServlet extends HttpServlet {
             System.out.println("odinakovoe imya");
             req.setAttribute("errorMessage", "odinakovoe imya");
             req.getRequestDispatcher("/new-match.jsp").forward(req, resp);
-         //   req.getRequestDispatcher("/error.jsp").forward(req, resp);
+            //   req.getRequestDispatcher("/error.jsp").forward(req, resp);
             throw new IllegalStateException("odinakovoe imya");
         }
 
@@ -66,3 +66,4 @@ public class MatchServlet extends HttpServlet {
         resp.sendRedirect("/match-score?uuid=" + uuid.toString());
     }
 }
+//не создаёт игроков не сохраняет матчи
