@@ -9,5 +9,9 @@ public class MatchBoardDto {
     private PlayerScoreDto playerScoreDto2;
 
     private int tiebreakOnOff ;
+    private boolean isFinish;
 
+    public boolean isFinish() {
+        return isFinish;
+    }
 }

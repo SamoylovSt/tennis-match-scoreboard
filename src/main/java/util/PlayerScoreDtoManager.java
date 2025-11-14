@@ -22,11 +22,6 @@ public class PlayerScoreDtoManager {
         return instance;
     }
 
-    public void putMatchBoardDto(UUID uuid, MatchBoardDto matchBoardDto) {
-
-        matchCollection.put(uuid, matchBoardDto);
-    }
-
     public MatchBoardDto getMatchBoardDtoForId(UUID key) {
         return matchCollection.get(key);
     }

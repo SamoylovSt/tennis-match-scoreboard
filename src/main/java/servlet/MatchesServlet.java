@@ -39,7 +39,7 @@ public class MatchesServlet extends HttpServlet {
         try {
             String name = req.getParameter("name");
             if (name == null) {
-//
+
                 List<MatchListDto> matchesList = matchService.getAllMatchPagination(page, pageSize);
 
                 req.setAttribute("matches", matchesList);

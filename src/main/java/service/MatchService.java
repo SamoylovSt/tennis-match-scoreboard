@@ -2,6 +2,7 @@ package service;
 
 import dao.MatchDao;
 import dao.PlayerDao;
+import dto.MatchBoardDto;
 import dto.MatchListDto;
 import dto.PlayerNameDto;
 import dto.PlayerScoreDto;
@@ -11,7 +12,6 @@ import util.PlayerScoreDtoManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class MatchService {
     PlayerDao playerDao = new PlayerDao();
@@ -20,11 +20,11 @@ public class MatchService {
     PlayerScoreDtoManager manager = PlayerScoreDtoManager.getInstance();
 
 
-    public void saveMatch(String keyMatch) {
+    public void saveMatch(MatchBoardDto matchBoardDto) {
         Match matchForSave = new Match();
         System.out.println(" in saveMatch service");
-        PlayerScoreDto player1 = manager.getMatchBoardDtoForId(UUID.fromString(keyMatch)).getPlayerScoreDto1();
-        PlayerScoreDto player2 = manager.getMatchBoardDtoForId(UUID.fromString(keyMatch)).getPlayerScoreDto2();
+        PlayerScoreDto player1 = matchBoardDto.getPlayerScoreDto1();
+        PlayerScoreDto player2 = matchBoardDto.getPlayerScoreDto2();
         Player playerForMatch1 = playerDao.findPlayerByName(player1.convertToPlayerNameDto(player1));
         Player playerForMatch2 = playerDao.findPlayerByName(player2.convertToPlayerNameDto(player2));
         Player winner = playerForMatch2;
@@ -84,10 +84,9 @@ public class MatchService {
             }
             return count;
         } catch (Exception ex) {
-            throw new MatchesException(ex);
+            throw new MatchesException("db match counting error");
         }
     }
-
 }
 
 

@@ -29,11 +29,11 @@ public class ExceptionFilter implements Filter {
     private void exceptionHandle(Exception ex, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         if (ex instanceof MatchesException) {
-            redirect(req, resp, HttpServletResponse.SC_NOT_FOUND, "Not found");
+            redirect(req, resp, HttpServletResponse.SC_NOT_FOUND, ex.getMessage());
         } else if (ex instanceof DaoException) {
-            redirect(req, resp, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Dao error");
+            redirect(req, resp, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
         } else {
-            redirect(req, resp, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Server error");
+            redirect(req, resp, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
         }
     }
 
@@ -43,8 +43,7 @@ public class ExceptionFilter implements Filter {
         req.setAttribute("errorMessage", message);
 
 
-            req.getRequestDispatcher("/error.jsp").forward(req, resp);
-
+        req.getRequestDispatcher("/error.jsp").forward(req, resp);
 
 
     }

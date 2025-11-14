@@ -23,7 +23,7 @@ public class MatchDao {
                 if (transaction.isActive()) {
                     transaction.rollback();
                 }
-                throw new DaoException(ex);
+                throw new DaoException("match creation error");
             }
         }
     }
@@ -44,7 +44,7 @@ public class MatchDao {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            throw new DaoException(ex);
+            throw new DaoException("getMatchesForId error");
         }
     }
 
@@ -63,7 +63,7 @@ public class MatchDao {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            throw new DaoException(ex);
+            throw new DaoException("Get all matches error");
         }finally {
             if (em != null && em.isOpen()) {
                 em.close();
@@ -89,7 +89,7 @@ public class MatchDao {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            throw new DaoException(ex);
+            throw new DaoException("Pagination error");
         }finally {
             if (em != null && em.isOpen()) {
                 em.close();

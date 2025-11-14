@@ -47,7 +47,7 @@ public class PlayerDao {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            throw new DaoException(ex);
+            throw new DaoException("match creation error");
         }finally {
              if (em != null && em.isOpen()) {
                  em.close();

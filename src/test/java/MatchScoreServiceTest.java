@@ -1,10 +1,12 @@
+import dto.MatchBoardDto;
+import dto.MatchListDto;
 import dto.PlayerScoreDto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import service.MatchScoreService;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class MatchScoreServiceTest {
 
@@ -16,52 +18,77 @@ class MatchScoreServiceTest {
     }
 
     @Test
-    void boardCalculatorGamesTest() {
+    void isFinishShouldBeFalse() {
+        MatchBoardDto matchBoardDto = new MatchBoardDto();
+        matchBoardDto.setFinish(false);
+        var playerScoreDto1 = new PlayerScoreDto();
+        playerScoreDto1.setName("gey");
+        playerScoreDto1.setSets(0);
+        playerScoreDto1.setGames(0);
+        playerScoreDto1.setPoints(40);
 
-        var playerScoreDto = new PlayerScoreDto();
-        playerScoreDto.setName("gey");
-        playerScoreDto.setSets(1);
-        playerScoreDto.setGames(1);
-        playerScoreDto.setPoints(40);
+        var playerScoreDto2 = new PlayerScoreDto();
+        playerScoreDto2.setName("gey2");
+        playerScoreDto2.setSets(0);
+        playerScoreDto2.setGames(0);
+        playerScoreDto2.setPoints(40);
 
-        int expectedValue = 2;
+        matchBoardDto.setPlayerScoreDto1(playerScoreDto1);
+        matchBoardDto.setPlayerScoreDto2(playerScoreDto2);
+        MatchBoardDto result = matchScoreService.changeScore("player1", matchBoardDto);
 
-        PlayerScoreDto playerScoreDtoResult = matchScoreService.boardCalculator(playerScoreDto, "132");
-        assertEquals(expectedValue, playerScoreDtoResult.getGames());
+        assertFalse(result.isFinish());
+
     }
 
     @Test
-    void boardCalculatorSetTest() {
+    void gamesShouldBeOne() {
+        MatchBoardDto matchBoardDto = new MatchBoardDto();
+        matchBoardDto.setFinish(false);
+        var playerScoreDto1 = new PlayerScoreDto();
+        playerScoreDto1.setName("gey");
+        playerScoreDto1.setSets(0);
+        playerScoreDto1.setGames(0);
+        playerScoreDto1.setPoints(40);
 
-        var playerScoreDto = new PlayerScoreDto();
-        playerScoreDto.setName("gey");
-        playerScoreDto.setSets(1);
-        playerScoreDto.setGames(6);
-        playerScoreDto.setPoints(0);
+        var playerScoreDto2 = new PlayerScoreDto();
+        playerScoreDto2.setName("gey2");
+        playerScoreDto2.setSets(0);
+        playerScoreDto2.setGames(0);
+        playerScoreDto2.setPoints(40);
 
-        int expectedValue = 2;
+        matchBoardDto.setPlayerScoreDto1(playerScoreDto1);
+        matchBoardDto.setPlayerScoreDto2(playerScoreDto2);
+        MatchBoardDto result = matchScoreService.changeScore("player1", matchBoardDto);
 
-        PlayerScoreDto playerScoreDtoResult = matchScoreService.boardCalculator(playerScoreDto, "132");
-        assertEquals(expectedValue, playerScoreDtoResult.getSets());
+        int expectedValue=1;
+        assertEquals(expectedValue,result.getPlayerScoreDto1().getGames());
     }
-    
+
     @Test
-    void boardCalculatorPointsTest() {
+    void tiebreakShouldBeOne() {
+        MatchBoardDto matchBoardDto = new MatchBoardDto();
+        matchBoardDto.setFinish(false);
+        var playerScoreDto1 = new PlayerScoreDto();
+        playerScoreDto1.setName("gey");
+        playerScoreDto1.setSets(0);
+        playerScoreDto1.setGames(6);
+        playerScoreDto1.setPoints(0);
 
-        var playerScoreDto = new PlayerScoreDto();
-        playerScoreDto.setName("gey");
-        playerScoreDto.setSets(1);
-        playerScoreDto.setGames(1);
-        playerScoreDto.setPoints(30);
+        var playerScoreDto2 = new PlayerScoreDto();
+        playerScoreDto2.setName("gey2");
+        playerScoreDto2.setSets(0);
+        playerScoreDto2.setGames(6);
+        playerScoreDto2.setPoints(0);
 
-        int expectedValue = 40;
+        matchBoardDto.setPlayerScoreDto1(playerScoreDto1);
+        matchBoardDto.setPlayerScoreDto2(playerScoreDto2);
+        MatchBoardDto result = matchScoreService.changeScore("player1", matchBoardDto);
 
-        PlayerScoreDto playerScoreDtoResult = matchScoreService.boardCalculator(playerScoreDto, "132");
-        assertEquals(expectedValue, playerScoreDtoResult.getPoints());
+        int expectedValue=1;
+        System.out.println("tiebreak test");
+        assertEquals(expectedValue,result.getTiebreakOnOff());
     }
 
-    @AfterEach
-    void deleteData(){
 
-    }
 }

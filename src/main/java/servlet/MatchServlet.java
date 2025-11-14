@@ -36,9 +36,10 @@ public class MatchServlet extends HttpServlet {
         p1.setName(playerOne);
 
 
-        if (!playerOne.equals(playerTwo)) {
+        if (!playerOne.equals(playerTwo) && playerOne.length() < 20 && playerTwo.length() < 20) {
             if (playerService.findPlayerByName(p1) == null) {
                 playerService.createPlayer(p1);
+                System.out.println("player1 save");
             } else {
                 p1.setName(playerService.findPlayerByName(p1).getName());
                 System.out.println("### player " + p1 + " already exists ###");
@@ -47,16 +48,22 @@ public class MatchServlet extends HttpServlet {
             p2.setName(playerTwo);
             if (playerService.findPlayerByName(p2) == null) {
                 playerService.createPlayer(p2);
+                System.out.println("player2 save");
             } else {
                 p2.setName(playerService.findPlayerByName(p2).getName());
                 System.out.println("### player " + p2 + " already exists ###");
             }
         } else {
-            System.out.println("odinakovoe imya");
-            req.setAttribute("errorMessage", "odinakovoe imya");
-            req.getRequestDispatcher("/new-match.jsp").forward(req, resp);
-            //   req.getRequestDispatcher("/error.jsp").forward(req, resp);
-            throw new IllegalStateException("odinakovoe imya");
+            if (playerOne.equals(playerTwo)) {
+
+                System.out.println("odinakovoe imya");
+                req.setAttribute("errorMessage", "odinakovoe imya");
+                req.getRequestDispatcher("/new-match.jsp").forward(req, resp);
+            } else if (playerOne.length() > 20 || playerTwo.length() > 20 ) {
+                System.out.println("name is too long");
+                req.setAttribute("errorMessage", "name is too long");
+                req.getRequestDispatcher("/new-match.jsp").forward(req, resp);
+            }
         }
 
 
@@ -66,4 +73,3 @@ public class MatchServlet extends HttpServlet {
         resp.sendRedirect("/match-score?uuid=" + uuid.toString());
     }
 }
-//не создаёт игроков не сохраняет матчи

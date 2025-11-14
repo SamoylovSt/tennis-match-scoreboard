@@ -1,6 +1,5 @@
 package dto;
 
-import entity.Player;
 import lombok.Data;
 
 @Data
@@ -10,9 +9,9 @@ public class PlayerScoreDto {
     private int games;
     private int points;
 
-    public PlayerNameDto convertToPlayerNameDto(PlayerScoreDto player){
+    public PlayerNameDto convertToPlayerNameDto(PlayerScoreDto player) {
 
-        PlayerNameDto playerNameDto= new PlayerNameDto();
+        PlayerNameDto playerNameDto = new PlayerNameDto();
 
         playerNameDto.setName(player.getName());
         return playerNameDto;
