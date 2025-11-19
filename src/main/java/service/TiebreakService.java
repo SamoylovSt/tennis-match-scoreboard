@@ -9,8 +9,8 @@ import java.util.UUID;
 public class TiebreakService {
 
     public PlayerScoreDto changeTiebreakScore(String playerWinsPoint, MatchBoardDto matchBoardDto) {
-        PlayerScoreDto player1 = matchBoardDto.getPlayerScoreDto1();
-        PlayerScoreDto player2 = matchBoardDto.getPlayerScoreDto2();
+        PlayerScoreDto player1 = matchBoardDto.playerScoreDto1();
+        PlayerScoreDto player2 = matchBoardDto.playerScoreDto2();
         PlayerScoreDto temp = new PlayerScoreDto();
         if (playerWinsPoint.equals("player1")) {
             temp = tiebreak(player1);

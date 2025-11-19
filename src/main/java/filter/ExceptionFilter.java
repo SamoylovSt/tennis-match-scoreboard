@@ -17,16 +17,18 @@ public class ExceptionFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         try {
-
             chain.doFilter(request, response);
         } catch (Exception ex) {
-            exceptionHandle(ex, req, resp);
+            if (!resp.isCommitted()){
+                handleException(ex, req, resp);
+            }
+
         }
 
     }
 
 
-    private void exceptionHandle(Exception ex, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void handleException(Exception ex, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         if (ex instanceof MatchesException) {
             redirect(req, resp, HttpServletResponse.SC_NOT_FOUND, ex.getMessage());

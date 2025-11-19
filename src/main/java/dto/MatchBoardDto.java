@@ -1,17 +1,27 @@
 package dto;
 
-import lombok.Data;
+public record MatchBoardDto(PlayerScoreDto playerScoreDto1,
+                            PlayerScoreDto playerScoreDto2,
+                            int tiebreakOnOff,
+                            boolean isFinish) {
+    @Override
+    public PlayerScoreDto playerScoreDto1() {
+        return playerScoreDto1;
+    }
 
-@Data
-public class MatchBoardDto {
+    @Override
+    public PlayerScoreDto playerScoreDto2() {
+        return playerScoreDto2;
+    }
 
-    private PlayerScoreDto playerScoreDto1;
-    private PlayerScoreDto playerScoreDto2;
+    @Override
+    public int tiebreakOnOff() {
+        return tiebreakOnOff;
+    }
 
-    private int tiebreakOnOff ;
-    private boolean isFinish;
-
+    @Override
     public boolean isFinish() {
         return isFinish;
     }
+
 }

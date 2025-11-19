@@ -23,8 +23,8 @@ public class MatchScoreServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String uuid = req.getParameter("uuid");
         MatchBoardDto matchBoardDto1 = playerScoreDtoManager.getMatchBoardDtoForId(UUID.fromString(uuid));
-        PlayerScoreDto player1 = matchBoardDto1.getPlayerScoreDto1();
-        PlayerScoreDto player2 = matchBoardDto1.getPlayerScoreDto2();
+        PlayerScoreDto player1 = matchBoardDto1.playerScoreDto1();
+        PlayerScoreDto player2 = matchBoardDto1.playerScoreDto2();
         req.setAttribute("player1", player1);
         req.setAttribute("player2", player2);
         req.setAttribute("matchUuid", uuid);
@@ -37,8 +37,8 @@ public class MatchScoreServlet extends HttpServlet {
         String uuid = req.getParameter("uuid");
         MatchBoardDto matchBoardDtoForChangeScore = manager.getMatchBoardDtoForId(UUID.fromString(uuid));
         MatchBoardDto matchBoardDto = matchScoreService.changeScore(playerButton,matchBoardDtoForChangeScore);
-        PlayerScoreDto player1 = matchBoardDto.getPlayerScoreDto1();
-        PlayerScoreDto player2 = matchBoardDto.getPlayerScoreDto2();
+        PlayerScoreDto player1 = matchBoardDto.playerScoreDto1();
+        PlayerScoreDto player2 = matchBoardDto.playerScoreDto2();
 
         boolean finishMatchPoints = ((player1.getSets() == 2 ) ||
                 (player2.getSets() == 2));
@@ -50,13 +50,13 @@ public class MatchScoreServlet extends HttpServlet {
                 req.setAttribute("winnerName", player1.getName());
                 req.setAttribute("loserName", player2.getName());
                 req.getRequestDispatcher("/winner.jsp").forward(req, resp);
-                matchBoardDto.setFinish(true);
+                //           matchBoardDto.finish(true);
             } else if (player2Win) {
                 matchScoreService.selectPlayerToChangeScore(playerButton, matchBoardDto );
                 req.setAttribute("winnerName", player2.getName());
                 req.setAttribute("loserName", player1.getName());
                 req.getRequestDispatcher("/winner.jsp").forward(req, resp);
-                matchBoardDto.setFinish(true);
+          //      matchBoardDto.setFinish(true);
             }
 
         }

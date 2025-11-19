@@ -2,99 +2,69 @@ package dao;
 
 import entity.Match;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 import util.JPAUtil;
 
 import java.util.List;
 
 public class MatchDao {
+    private final String GET_MATCHES_FOR_ID = "FROM Match" +
+            " m WHERE m.player1.id" +
+            " = :id OR m.player2.id = :id ";
+    private final String GET_ALL_MATCHES = "FROM Match m " +
+            "LEFT JOIN FETCH m.player1 " +
+            "LEFT JOIN FETCH m.player2";
+    private final String GET_ALL_MATCHES_FOR_PAGINATION = "FROM Match" +
+            " ORDER BY id DESC";
 
-
-    public void createMatch(Match mathForSave) {
-        try (EntityManager em = JPAUtil.getEntutyManager()) {
-            EntityTransaction transaction = em.getTransaction();
-            try {
-                transaction.begin();
-                em.persist(mathForSave);
-                System.out.println("match saved");
-                transaction.commit();
-            } catch (Exception ex) {
-                if (transaction.isActive()) {
-                    transaction.rollback();
-                }
-                throw new DaoException("match creation error");
-            }
+    public void save(Match matchForSave) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            em.persist(matchForSave);
+            System.out.println("match saved");
+        } catch (Exception ex) {
+            throw new DaoException("match creation error");
         }
+
     }
 
-    public List<Match> getMatchesForId(int id) {
-
-        EntityManager em = JPAUtil.getEntutyManager();
+    public List<Match> findByPlayerId(int id) {
+        EntityManager em = JPAUtil.getEntityManager();
         try {
-            em.getTransaction().begin();
-
-            TypedQuery<Match> query = em.createQuery("FROM Match m WHERE m.player1.id = :id OR m.player2.id = :id ", Match.class);
+            TypedQuery<Match> query = em.createQuery(GET_MATCHES_FOR_ID, Match.class);
             query.setParameter("id", id);
             List<Match> matches = query.getResultList();
-
-            em.getTransaction().commit();
             return matches;
         } catch (Exception ex) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
             throw new DaoException("getMatchesForId error");
         }
     }
 
     public List<Match> getAllMatches() {
-
-        EntityManager em = JPAUtil.getEntutyManager();
+        EntityManager em = JPAUtil.getEntityManager();
         try {
-            em.getTransaction().begin();
-
-            TypedQuery<Match> query = em.createQuery("FROM Match", Match.class);
+            TypedQuery<Match> query = em.createQuery(GET_ALL_MATCHES, Match.class);
+           //TODO количство сделать а не лист "COUNT(m) FROM Match m"
             List<Match> matches = query.getResultList();
-
-            em.getTransaction().commit();
             return matches;
         } catch (Exception ex) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
             throw new DaoException("Get all matches error");
-        }finally {
-            if (em != null && em.isOpen()) {
-                em.close();
-            }
         }
     }
 
 
     public List<Match> getAllMatchesPagination(int page, int pageSize) {
-
-        EntityManager em = JPAUtil.getEntutyManager();
+        EntityManager em = JPAUtil.getEntityManager();
         try {
-            em.getTransaction().begin();
-
-            TypedQuery<Match> query = em.createQuery("FROM Match ORDER BY id DESC", Match.class);
+            TypedQuery<Match> query = em.createQuery(GET_ALL_MATCHES_FOR_PAGINATION, Match.class);
             query.setFirstResult((page - 1) * pageSize);
             query.setMaxResults(pageSize);
             List<Match> matches = query.getResultList();
-
-            em.getTransaction().commit();
             return matches;
         } catch (Exception ex) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
             throw new DaoException("Pagination error");
-        }finally {
-            if (em != null && em.isOpen()) {
-                em.close();
-            }
         }
+
     }
 
 

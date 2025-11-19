@@ -1,25 +1,23 @@
 package service;
 
 import dao.PlayerDao;
-import dto.PlayerNameDto;
 import entity.Player;
 
 public class PlayerService {
     PlayerDao playerDao = new PlayerDao();
 
-    public void createPlayer(PlayerNameDto player) {
+    public void createPlayer(String playerName) {
 
-        if (playerDao.findPlayerByName(player) == null) {
-            playerDao.createPlayer(player);
+        if (playerDao.findPlayerByName(playerName) == null) {
+            playerDao.save(playerName);
 
         } else {
             System.out.println("Player already exists");
         }
     }
+    public Player findPlayerByName(String playerName) {
 
-    public Player findPlayerByName(PlayerNameDto playerNameDto) {
-
-        return playerDao.findPlayerByName(playerNameDto);
+        return playerDao.findPlayerByName(playerName);
 
     }
 }

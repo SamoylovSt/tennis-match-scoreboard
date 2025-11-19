@@ -1,14 +1,8 @@
 package dto;
 
-import lombok.Data;
-
-@Data
-public class MatchListDto {
-
-     private String playerOneName;
-     private  String playerTwoName;
-     private String winnerName;
-
+public record MatchListDto(String playerOneName,
+                           String playerTwoName,
+                           String winnerName) {
 
 
 }

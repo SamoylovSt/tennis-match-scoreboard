@@ -1,6 +1,5 @@
 package servlet;
 
-import dto.PlayerNameDto;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -20,7 +19,7 @@ public class MatchServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("new-match.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/new-match.jsp").forward(req, resp);
         System.out.println("get servlet MatchServlet");
     }
 
@@ -32,26 +31,25 @@ public class MatchServlet extends HttpServlet {
 
         System.out.println("player one: " + playerOne + " player two: " + playerTwo);
 
-        PlayerNameDto p1 = new PlayerNameDto();
-        p1.setName(playerOne);
+
 
 
         if (!playerOne.equals(playerTwo) && playerOne.length() < 20 && playerTwo.length() < 20) {
-            if (playerService.findPlayerByName(p1) == null) {
-                playerService.createPlayer(p1);
+            if (playerService.findPlayerByName(playerOne) == null) {
+                playerService.createPlayer(playerOne);
                 System.out.println("player1 save");
             } else {
-                p1.setName(playerService.findPlayerByName(p1).getName());
-                System.out.println("### player " + p1 + " already exists ###");
+                playerOne=(playerService.findPlayerByName(playerOne).getName());
+                System.out.println("### player " + playerOne + " already exists ###");
             }
-            PlayerNameDto p2 = new PlayerNameDto();
-            p2.setName(playerTwo);
-            if (playerService.findPlayerByName(p2) == null) {
-                playerService.createPlayer(p2);
+
+
+            if (playerService.findPlayerByName(playerTwo) == null) {
+                playerService.createPlayer(playerTwo);
                 System.out.println("player2 save");
             } else {
-                p2.setName(playerService.findPlayerByName(p2).getName());
-                System.out.println("### player " + p2 + " already exists ###");
+                playerOne=(playerService.findPlayerByName(playerTwo).getName());
+                System.out.println("### player " + playerTwo + " already exists ###");
             }
         } else {
             if (playerOne.equals(playerTwo)) {

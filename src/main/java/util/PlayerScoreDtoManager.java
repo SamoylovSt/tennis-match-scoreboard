@@ -38,10 +38,7 @@ public class PlayerScoreDtoManager {
         player2.setSets(0);
         player2.setGames(0);
         player2.setPoints(0);
-        MatchBoardDto matchBoardDto = new MatchBoardDto();
-        matchBoardDto.setPlayerScoreDto1(player);
-        matchBoardDto.setPlayerScoreDto2(player2);
-
+        MatchBoardDto matchBoardDto = new MatchBoardDto(player,player2,0,false);
         matchCollection.put(key, matchBoardDto);
     }
 

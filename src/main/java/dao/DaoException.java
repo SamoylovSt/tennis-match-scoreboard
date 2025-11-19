@@ -5,7 +5,7 @@ public class DaoException extends RuntimeException {
         super(message);
     }
 
-    public DaoException(Throwable ex){
+    public DaoException(Throwable ex) {
         super(ex);
     }
 }

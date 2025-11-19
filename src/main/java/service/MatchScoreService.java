@@ -11,8 +11,8 @@ public class MatchScoreService {
     TiebreakService tiebreakService = new TiebreakService();
 
     public PlayerScoreDto selectPlayerToChangeScore(String playerWinsPoint, MatchBoardDto matchBoardDto) {
-        PlayerScoreDto player1 = matchBoardDto.getPlayerScoreDto1();
-        PlayerScoreDto player2 = matchBoardDto.getPlayerScoreDto2();
+        PlayerScoreDto player1 = matchBoardDto.playerScoreDto1();
+        PlayerScoreDto player2 = matchBoardDto.playerScoreDto2();
         PlayerScoreDto temp = new PlayerScoreDto();
         if (playerWinsPoint.equals("player1")) {
             temp = boardCalculator(player1, matchBoardDto);
@@ -45,8 +45,6 @@ public class MatchScoreService {
             temp = player;
             System.out.println("player service . sets==2");
             matchService.saveMatch(matchBoardDto);
-            //  manager.deleteCurrentMatch(matchBoardDto);
-
         }
         return temp;
     }
@@ -55,8 +53,8 @@ public class MatchScoreService {
     public MatchBoardDto changeScore(String playerButton, MatchBoardDto matchBoardDto) {
         MatchScoreService matchScoreService = new MatchScoreService();
         System.out.println("matchBoard: " + matchBoardDto);
-        PlayerScoreDto player1 = matchBoardDto.getPlayerScoreDto1();
-        PlayerScoreDto player2 = matchBoardDto.getPlayerScoreDto2();
+        PlayerScoreDto player1 = matchBoardDto.playerScoreDto1();
+        PlayerScoreDto player2 = matchBoardDto.playerScoreDto2();
         System.out.println(player1);
         System.out.println(player2);
 
@@ -88,7 +86,6 @@ public class MatchScoreService {
                         player1.setPoints(0);
                         player2 = matchScoreService.selectPlayerToChangeScore(playerButton, matchBoardDto);
                     }
-
                 }
             }
         } else if (tiebreak == 1) {
@@ -113,17 +110,9 @@ public class MatchScoreService {
                     manager.playersSetGamesAndPoints0(player1, player2);
                 }
             }
-
-
-
-
         }
-        MatchBoardDto matchBoardDto1 = new MatchBoardDto();
-        matchBoardDto1.setPlayerScoreDto1(player1);
-        matchBoardDto1.setPlayerScoreDto2(player2);
-        matchBoardDto1.setTiebreakOnOff(tiebreak);
-        System.out.println("TAIBRIK == "+tiebreak+" "+ matchBoardDto1.getTiebreakOnOff());
-
+        MatchBoardDto matchBoardDto1 = new MatchBoardDto(player1,player2,
+                tiebreak,false);
         return matchBoardDto1;
     }
 
