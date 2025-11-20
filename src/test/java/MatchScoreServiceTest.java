@@ -1,3 +1,5 @@
+import dao.MatchDao;
+import dao.PlayerDao;
 import dto.MatchBoardDto;
 import dto.MatchListDto;
 import dto.PlayerScoreDto;
@@ -5,16 +7,23 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import service.MatchScoreService;
+import service.MatchService;
+import service.TiebreakService;
+import util.PlayerScoreDtoManager;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class MatchScoreServiceTest {
-
+    PlayerDao playerDao = new PlayerDao();
+    MatchDao matchDao = new MatchDao();
     MatchScoreService matchScoreService;
+    MatchService matchService = new MatchService(playerDao, matchDao);
+    PlayerScoreDtoManager manager = PlayerScoreDtoManager.getInstance();
+    TiebreakService tiebreakService = new TiebreakService();
 
     @BeforeEach
     void prepare() {
-        matchScoreService = new MatchScoreService();
+        matchScoreService = new MatchScoreService(matchService, manager, tiebreakService);
     }
 
     @Test

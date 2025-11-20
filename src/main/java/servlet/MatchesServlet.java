@@ -1,24 +1,33 @@
 package servlet;
 
 import dto.MatchListDto;
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.MatchService;
+import util.ServiceContainer;
 
 import java.io.IOException;
-
 import java.util.List;
 
 @WebServlet("/matches")
 public class MatchesServlet extends HttpServlet {
+    private ServiceContainer container;
+    private MatchService matchService;
 
-    MatchService matchService = new MatchService();
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        this.container = (ServiceContainer) getServletContext().getAttribute("serviceContainer");
+        this.matchService = container.getMatchService();
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
 
         int page = 1;
         int pageSize = 5;
@@ -32,7 +41,7 @@ public class MatchesServlet extends HttpServlet {
             page = 1;
         }
 
-        int totalMatches = matchService.getTotalMatchCount();
+        long totalMatches = matchService.getTotalMatchCount();
         int totalPages = (int) Math.ceil((double) totalMatches / pageSize);
 
 

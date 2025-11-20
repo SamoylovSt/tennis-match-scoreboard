@@ -12,8 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MatchService {
-    PlayerDao playerDao = new PlayerDao();
-    MatchDao matchDao = new MatchDao();
+    private PlayerDao playerDao;
+    private MatchDao matchDao;
+
+    public MatchService(PlayerDao playerDao, MatchDao matchDao) {
+        this.playerDao = playerDao;
+        this.matchDao = matchDao;
+    }
 
     public void saveMatch(MatchBoardDto matchBoardDto) {
         Match matchForSave = new Match();
@@ -45,11 +50,10 @@ public class MatchService {
         return matchListDto;
     }
 
-
     public List<MatchListDto> getAllMatchPagination(int page, int pageSize) {
-        List<Match> matches = matchDao.getAllMatchesPagination(page, pageSize);
+        int offset = (page - 1) * pageSize;
+        List<Match> matches = matchDao.getAllMatchesPagination(offset, pageSize);
         List<MatchListDto> matchListDto = new ArrayList<>();
-
         for (Match m : matches) {
             MatchListDto matchListDto1 = new MatchListDto(m.getPlayer1().getName(),
                     m.getPlayer2().getName(),
@@ -59,19 +63,9 @@ public class MatchService {
         return matchListDto;
     }
 
-    public int getTotalMatchCount() {
+    public long getTotalMatchCount() {
         try {
-            List<Match> matches = matchDao.getAllMatches();
-            List<MatchListDto> matchListDto = new ArrayList<>();
-            int count = 0;
-            for (Match m : matches) {
-                MatchListDto matchListDto1 = new MatchListDto(m.getPlayer1().getName(),
-                        m.getPlayer2().getName(),
-                        m.getWinner().getName());
-                matchListDto.add(matchListDto1);
-                count++;
-            }
-            return count;
+            return matchDao.getAllMatchesCount();
         } catch (Exception ex) {
             throw new MatchesException("db match counting error");
         }
