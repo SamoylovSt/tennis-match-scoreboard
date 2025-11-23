@@ -2,7 +2,7 @@ package dto;
 
 public record MatchBoardDto(PlayerScoreDto playerScoreDto1,
                             PlayerScoreDto playerScoreDto2,
-                            int tiebreakOnOff,
+                            boolean tiebreakOnOff,
                             boolean isFinish) {
     @Override
     public PlayerScoreDto playerScoreDto1() {
@@ -15,9 +15,11 @@ public record MatchBoardDto(PlayerScoreDto playerScoreDto1,
     }
 
     @Override
-    public int tiebreakOnOff() {
+    public boolean tiebreakOnOff() {
         return tiebreakOnOff;
     }
+
+
 
     @Override
     public boolean isFinish() {

@@ -41,7 +41,7 @@ class MatchScoreServiceTest {
         playerScoreDto2.setSets(0);
         playerScoreDto2.setGames(0);
         playerScoreDto2.setPoints(40);
-        MatchBoardDto matchBoardDto = new MatchBoardDto(playerScoreDto1, playerScoreDto2, 0, false);
+        MatchBoardDto matchBoardDto = new MatchBoardDto(playerScoreDto1, playerScoreDto2, false, false);
 
         MatchBoardDto result = matchScoreService.changeScore("player1", matchBoardDto);
 
@@ -64,7 +64,7 @@ class MatchScoreServiceTest {
         playerScoreDto2.setSets(0);
         playerScoreDto2.setGames(0);
         playerScoreDto2.setPoints(40);
-        MatchBoardDto matchBoardDto = new MatchBoardDto(playerScoreDto1, playerScoreDto2, 0, false);
+        MatchBoardDto matchBoardDto = new MatchBoardDto(playerScoreDto1, playerScoreDto2, false, false);
 
         MatchBoardDto result = matchScoreService.changeScore("player1", matchBoardDto);
 
@@ -87,11 +87,11 @@ class MatchScoreServiceTest {
         playerScoreDto2.setGames(6);
         playerScoreDto2.setPoints(0);
 
-        MatchBoardDto matchBoardDto = new MatchBoardDto(playerScoreDto1, playerScoreDto2, 0, false);
+        MatchBoardDto matchBoardDto = new MatchBoardDto(playerScoreDto1, playerScoreDto2, false, false);
 
         MatchBoardDto result = matchScoreService.changeScore("player1", matchBoardDto);
 
-        int expectedValue = 1;
+        boolean expectedValue = true;
         System.out.println("tiebreak test");
         assertEquals(expectedValue, result.tiebreakOnOff());
     }

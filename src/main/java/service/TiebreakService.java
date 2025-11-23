@@ -11,13 +11,10 @@ public class TiebreakService {
     public PlayerScoreDto changeTiebreakScore(String playerWinsPoint, MatchBoardDto matchBoardDto) {
         PlayerScoreDto player1 = matchBoardDto.playerScoreDto1();
         PlayerScoreDto player2 = matchBoardDto.playerScoreDto2();
-        PlayerScoreDto temp = new PlayerScoreDto();
-        if (playerWinsPoint.equals("player1")) {
-            temp = tiebreak(player1);
-        } else if (playerWinsPoint.equals("player2")) {
-            temp = tiebreak(player2);
+        if(playerWinsPoint.equals("player1")){
+            return tiebreak(player1);
         }
-        return temp;
+        return tiebreak(player2);
     }
 
     public PlayerScoreDto tiebreak(PlayerScoreDto player) {

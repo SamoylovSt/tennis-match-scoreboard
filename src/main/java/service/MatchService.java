@@ -20,14 +20,14 @@ public class MatchService {
         this.matchDao = matchDao;
     }
 
-    public void saveMatch(MatchBoardDto matchBoardDto) {
+    public void saveMatch(MatchBoardDto matchBoardDto, PlayerScoreDto winnerPlayer) {
         Match matchForSave = new Match();
         System.out.println(" in saveMatch service");
         PlayerScoreDto player1 = matchBoardDto.playerScoreDto1();
         PlayerScoreDto player2 = matchBoardDto.playerScoreDto2();
         Player playerForMatch1 = playerDao.findPlayerByName(player1.getName());
         Player playerForMatch2 = playerDao.findPlayerByName(player2.getName());
-        Player winner = playerForMatch2;
+        Player winner = playerDao.findPlayerByName(winnerPlayer.getName());
         matchForSave.setPlayer1(playerForMatch1);
         matchForSave.setPlayer2(playerForMatch2);
         matchForSave.setWinner(winner);

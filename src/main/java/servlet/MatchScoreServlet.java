@@ -23,11 +23,11 @@ public class MatchScoreServlet extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-    super.init(config);
+        super.init(config);
         this.container = (ServiceContainer) getServletContext()
                 .getAttribute("serviceContainer");
-        this.manager=PlayerScoreDtoManager.getInstance();
-        this.matchScoreService=container.getMatchScoreService();
+        this.manager = PlayerScoreDtoManager.getInstance();
+        this.matchScoreService = container.getMatchScoreService();
 
 
     }
@@ -72,7 +72,7 @@ public class MatchScoreServlet extends HttpServlet {
                 req.setAttribute("loserName", player1.getName());
                 req.getRequestDispatcher("/winner.jsp").forward(req, resp);
             }
-
+            manager.deleteMatch(UUID.fromString(uuid));
         }
 
         req.setAttribute("player1", player1);

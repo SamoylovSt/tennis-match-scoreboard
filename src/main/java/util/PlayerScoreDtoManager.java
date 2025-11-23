@@ -6,16 +6,17 @@ import dto.PlayerScoreDto;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class PlayerScoreDtoManager {
 
     private static PlayerScoreDtoManager instance;
-    private Map<UUID, MatchBoardDto> matchCollection = new HashMap<>();
+    private Map<UUID, MatchBoardDto> matchCollection = new ConcurrentHashMap<>();
 
     public PlayerScoreDtoManager() {
     }
 
-    public static PlayerScoreDtoManager getInstance() {
+    public synchronized static PlayerScoreDtoManager getInstance() {
         if (instance == null) {
             instance = new PlayerScoreDtoManager();
         }
@@ -38,15 +39,8 @@ public class PlayerScoreDtoManager {
         player2.setSets(0);
         player2.setGames(0);
         player2.setPoints(0);
-        MatchBoardDto matchBoardDto = new MatchBoardDto(player,player2,0,false);
+        MatchBoardDto matchBoardDto = new MatchBoardDto(player,player2,false,false);
         matchCollection.put(key, matchBoardDto);
-    }
-
-    public void deleteCurrentMatch(String key) {
-
-        matchCollection.remove(key);
-        System.out.println(matchCollection.get("delete" + key));
-
     }
 
     public void playersSetGamesAndPoints0(PlayerScoreDto player1, PlayerScoreDto player2) {
@@ -54,5 +48,9 @@ public class PlayerScoreDtoManager {
         player1.setPoints(0);
         player2.setGames(0);
         player2.setPoints(0);
+    }
+
+    public void deleteMatch(UUID uuid){
+        matchCollection.remove(uuid);
     }
 }

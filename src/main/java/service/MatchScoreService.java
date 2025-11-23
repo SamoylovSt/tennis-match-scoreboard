@@ -5,10 +5,11 @@ import dto.PlayerScoreDto;
 import util.PlayerScoreDtoManager;
 
 public class MatchScoreService {
-    private int tiebreak;
+    private volatile boolean tiebreak;
     private MatchService matchService;
-    private PlayerScoreDtoManager manager ;
-    private TiebreakService tiebreakService ;
+    private PlayerScoreDtoManager manager;
+    private TiebreakService tiebreakService;
+
 
     public MatchScoreService(MatchService matchService, PlayerScoreDtoManager manager, TiebreakService tiebreakService) {
         this.matchService = matchService;
@@ -50,13 +51,13 @@ public class MatchScoreService {
         } else if (player.getSets() == 2) {
             temp = player;
             System.out.println("player service . sets==2");
-            matchService.saveMatch(matchBoardDto);
+
+            matchService.saveMatch(matchBoardDto, player);
         }
         return temp;
     }
 
-
-    public MatchBoardDto changeScore(String playerButton, MatchBoardDto matchBoardDto) {
+    public synchronized MatchBoardDto changeScore(String playerButton, MatchBoardDto matchBoardDto) {
         System.out.println("matchBoard: " + matchBoardDto);
         PlayerScoreDto player1 = matchBoardDto.playerScoreDto1();
         PlayerScoreDto player2 = matchBoardDto.playerScoreDto2();
@@ -65,12 +66,12 @@ public class MatchScoreService {
 
         boolean goTiebreak = (player1.getGames() == 6) &&
                 (player2.getGames() == 6);
-        if (goTiebreak && tiebreak != 1) {
-            tiebreak = 1;
+        if (goTiebreak && tiebreak != true) {
+            tiebreak = true;
             manager.playersSetGamesAndPoints0(player1, player2);
             System.out.println("tiebreak GET STARTED");
         }
-        if (tiebreak == 0) {
+        if (tiebreak == false) {
             boolean finishMatchPoints = ((player1.getSets() == 1 && player1.getGames() == 5 && player1.getPoints() == 40) ||
                     (player2.getSets() == 1 && player2.getGames() == 5 && player2.getPoints() == 40));
             if (finishMatchPoints) {
@@ -78,7 +79,7 @@ public class MatchScoreService {
             } else {
                 if (playerButton.equals("player1")) {
                     System.out.println("button 1");
-                    player1 =selectPlayerToChangeScore(playerButton, matchBoardDto);
+                    player1 = selectPlayerToChangeScore(playerButton, matchBoardDto);
                     if (player1.getPoints() == 40) {
                         player2.setPoints(0);
                         player1 = selectPlayerToChangeScore(playerButton, matchBoardDto);
@@ -93,14 +94,15 @@ public class MatchScoreService {
                     }
                 }
             }
-        } else if (tiebreak == 1) {
-            System.out.println("taibreak=1");
+        } else if (tiebreak == true) {
+            System.out.println("tiebreak=1");
             if (playerButton.equals("player1")) {
                 System.out.println("score button 1");
                 player1 = tiebreakService.changeTiebreakScore(playerButton, matchBoardDto);
                 System.out.println(player1.getGames() + " player 1 games");
                 if ((player1.getPoints() - 2) == player2.getPoints()) {
-                    tiebreak = 0;
+                    tiebreak = false;
+
                     player1.setSets(player1.getSets() + 1);
                     manager.playersSetGamesAndPoints0(player1, player2);
                 }
@@ -110,16 +112,17 @@ public class MatchScoreService {
                 player2 = tiebreakService.changeTiebreakScore(playerButton, matchBoardDto);
                 System.out.println(player1.getGames() + " player 2 games");
                 if (player1.getPoints() == (player2.getPoints() - 2)) {
-                    tiebreak = 0;
+                    tiebreak = false;
+
                     player2.setSets(player2.getSets() + 1);
                     manager.playersSetGamesAndPoints0(player1, player2);
                 }
             }
         }
+
         MatchBoardDto matchBoardDto1 = new MatchBoardDto(player1, player2,
                 tiebreak, false);
         return matchBoardDto1;
     }
-
 
 }

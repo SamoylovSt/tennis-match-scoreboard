@@ -11,11 +11,6 @@ public class PlayerService {
     }
 
     public void createPlayer(String playerName) {
-//        if (playerDao.findPlayerByName(playerName) == null) {
-//            playerDao.save(playerName);
-//        } else {
-//            System.out.println("Player already exists");
-//        }
        try {
            playerDao.save(playerName);
        }catch (Exception e){

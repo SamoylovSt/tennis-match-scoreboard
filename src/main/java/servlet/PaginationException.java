@@ -6,6 +6,6 @@ public class PaginationException extends RuntimeException {
     }
 
     public PaginationException(Throwable ex) {
-        super((ex));
+        super(ex);
     }
 }

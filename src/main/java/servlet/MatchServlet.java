@@ -41,7 +41,6 @@ public class MatchServlet extends HttpServlet {
 
         System.out.println("player one: " + playerOne + " player two: " + playerTwo);
 
-
         if (!playerOne.equals(playerTwo) && playerOne.length() < 20 && playerTwo.length() < 20) {
             if (playerService.findPlayerByName(playerOne) == null) {
                 playerService.createPlayer(playerOne);
@@ -70,6 +69,7 @@ public class MatchServlet extends HttpServlet {
                 req.setAttribute("errorMessage", "name is too long");
                 req.getRequestDispatcher("/new-match.jsp").forward(req, resp);
             }
+            return;
         }
 
 
