@@ -23,7 +23,6 @@ public class MatchDao {
         } catch (Exception ex) {
             throw new DaoException("match creation error");
         }
-
     }
 
     public List<Match> findByPlayerId(int id) {
@@ -41,7 +40,7 @@ public class MatchDao {
     public long getAllMatchesCount() {
         EntityManager em = JPAUtil.getEntityManager();
         try {
-            TypedQuery<Long> query = em.createQuery("SELECT COUNT(m) FROM Match m", Long.class);
+            TypedQuery<Long> query = em.createQuery(GET_COUNT_MATCHES, Long.class);
             System.out.println(query + "match count");
             Long matchesCount = query.getSingleResult();
             return matchesCount;
@@ -49,7 +48,6 @@ public class MatchDao {
             throw new DaoException("Get all matches error");
         }
     }
-
 
     public List<Match> getAllMatchesPagination(int offset, int pageSize) {
         EntityManager em = JPAUtil.getEntityManager();
@@ -64,6 +62,5 @@ public class MatchDao {
         }
 
     }
-
 
 }

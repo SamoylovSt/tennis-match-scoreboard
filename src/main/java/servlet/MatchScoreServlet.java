@@ -28,14 +28,10 @@ public class MatchScoreServlet extends HttpServlet {
                 .getAttribute("serviceContainer");
         this.manager = PlayerScoreDtoManager.getInstance();
         this.matchScoreService = container.getMatchScoreService();
-
-
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
         String uuid = req.getParameter("uuid");
         MatchBoardDto matchBoardDto1 = manager.getMatchBoardDtoForId(UUID.fromString(uuid));
         PlayerScoreDto player1 = matchBoardDto1.playerScoreDto1();
@@ -78,7 +74,6 @@ public class MatchScoreServlet extends HttpServlet {
         req.setAttribute("player1", player1);
         req.setAttribute("player2", player2);
         req.setAttribute("matchUuid", uuid);
-
         req.getRequestDispatcher("/match-score.jsp").forward(req, resp);
     }
 }

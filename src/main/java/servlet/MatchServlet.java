@@ -38,7 +38,6 @@ public class MatchServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         String playerOne = req.getParameter("playerOne");
         String playerTwo = req.getParameter("playerTwo");
-
         System.out.println("player one: " + playerOne + " player two: " + playerTwo);
 
         if (!playerOne.equals(playerTwo) && playerOne.length() < 20 && playerTwo.length() < 20) {
@@ -49,8 +48,6 @@ public class MatchServlet extends HttpServlet {
                 playerOne = (playerService.findPlayerByName(playerOne).getName());
                 System.out.println("### player " + playerOne + " already exists ###");
             }
-
-
             if (playerService.findPlayerByName(playerTwo) == null) {
                 playerService.createPlayer(playerTwo);
                 System.out.println("player2 save");
@@ -71,10 +68,7 @@ public class MatchServlet extends HttpServlet {
             }
             return;
         }
-
-
         UUID uuid = UUID.randomUUID();
-
         manager.setPlayerScoreDto(uuid, playerOne, playerTwo);
         resp.sendRedirect("/match-score?uuid=" + uuid.toString());
     }
