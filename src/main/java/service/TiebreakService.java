@@ -22,7 +22,6 @@ public class TiebreakService {
         player.setPoints(player.getPoints()+1);
         temp=player;
         return temp;
-
     }
 
 

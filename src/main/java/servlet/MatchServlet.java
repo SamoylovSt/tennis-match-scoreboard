@@ -30,7 +30,6 @@ public class MatchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/WEB-INF/new-match.jsp").forward(req, resp);
-        System.out.println("get servlet MatchServlet");
     }
 
     @Override
@@ -38,31 +37,23 @@ public class MatchServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         String playerOne = req.getParameter("playerOne");
         String playerTwo = req.getParameter("playerTwo");
-        System.out.println("player one: " + playerOne + " player two: " + playerTwo);
 
         if (!playerOne.equals(playerTwo) && playerOne.length() < 20 && playerTwo.length() < 20) {
             if (playerService.findPlayerByName(playerOne) == null) {
                 playerService.createPlayer(playerOne);
-                System.out.println("player1 save");
             } else {
                 playerOne = (playerService.findPlayerByName(playerOne).getName());
-                System.out.println("### player " + playerOne + " already exists ###");
             }
             if (playerService.findPlayerByName(playerTwo) == null) {
                 playerService.createPlayer(playerTwo);
-                System.out.println("player2 save");
             } else {
                 playerOne = (playerService.findPlayerByName(playerTwo).getName());
-                System.out.println("### player " + playerTwo + " already exists ###");
             }
         } else {
             if (playerOne.equals(playerTwo)) {
-
-                System.out.println("odinakovoe imya");
-                req.setAttribute("errorMessage", "odinakovoe imya");
+                req.setAttribute("errorMessage", "the same name");
                 req.getRequestDispatcher("/new-match.jsp").forward(req, resp);
             } else if (playerOne.length() > 20 || playerTwo.length() > 20) {
-                System.out.println("name is too long");
                 req.setAttribute("errorMessage", "name is too long");
                 req.getRequestDispatcher("/new-match.jsp").forward(req, resp);
             }

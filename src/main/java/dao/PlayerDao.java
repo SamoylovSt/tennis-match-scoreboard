@@ -15,7 +15,6 @@ public class PlayerDao {
             TypedQuery<Player> query = em.createQuery(SELECT_PLAYER_BY_NAME, Player.class);
             query.setParameter("name", playerName);
             Player player = query.getSingleResult();
-            System.out.println(player.getName() + "  name from findPlayerByName");
             return player;
         } catch (NoResultException e) {
             return null;
@@ -28,7 +27,6 @@ public class PlayerDao {
             Player player = new Player();
             player.setName(playerName);
             em.persist(player);
-            System.out.println(playerName + "player create");
         } catch (Exception ex) {
             throw new DaoException("player creation error");
         }

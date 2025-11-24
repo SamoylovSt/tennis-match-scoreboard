@@ -19,8 +19,6 @@ public record MatchBoardDto(PlayerScoreDto playerScoreDto1,
         return tiebreakOnOff;
     }
 
-
-
     @Override
     public boolean isFinish() {
         return isFinish;

@@ -16,7 +16,6 @@ public class PlayerService {
        }catch (Exception e){
            throw  new IllegalArgumentException("player alredy exist (PlayerService)");
        }
-
     }
 
     public Player findPlayerByName(String playerName) {

@@ -8,5 +8,4 @@ public class PlayerScoreDto {
     private int sets;
     private int games;
     private int points;
-
 }

@@ -19,7 +19,6 @@ public class MatchDao {
         EntityManager em = JPAUtil.getEntityManager();
         try {
             em.persist(matchForSave);
-            System.out.println("match saved");
         } catch (Exception ex) {
             throw new DaoException("match creation error");
         }

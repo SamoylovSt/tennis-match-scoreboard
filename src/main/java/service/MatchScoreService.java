@@ -48,7 +48,6 @@ public class MatchScoreService {
             temp = player;
         } else if (player.getSets() == 2) {
             temp = player;
-            System.out.println("player service . sets==2");
             matchService.saveMatch(matchBoardDto, player);
         }
         return temp;
@@ -63,7 +62,6 @@ public class MatchScoreService {
 
         } else {
             if (playerButton.equals("player1")) {
-                System.out.println("button 1");
                 player1 = selectPlayerToChangeScore(playerButton, matchBoardDto);
                 if (player1.getPoints() == 40) {
                     player2.setPoints(0);
@@ -71,7 +69,6 @@ public class MatchScoreService {
                 }
             }
             if (playerButton.equals("player2")) {
-                System.out.println("button 2");
                 player2 = selectPlayerToChangeScore(playerButton, matchBoardDto);
                 if (player2.getPoints() == 40) {
                     player1.setPoints(0);
@@ -86,22 +83,16 @@ public class MatchScoreService {
     public MatchBoardDto changeScoreWithTiebreak(String playerButton, MatchBoardDto matchBoardDto) {
         PlayerScoreDto player1 = matchBoardDto.playerScoreDto1();
         PlayerScoreDto player2 = matchBoardDto.playerScoreDto2();
-        System.out.println("tiebreak=1");
         if (playerButton.equals("player1")) {
-            System.out.println("score button 1");
             player1 = tiebreakService.changeTiebreakScore(playerButton, matchBoardDto);
-            System.out.println(player1.getGames() + " player 1 games");
             if ((player1.getPoints() - 2) == player2.getPoints()) {
                 tiebreak = false;
-
                 player1.setSets(player1.getSets() + 1);
                 manager.playersSetGamesAndPoints0(player1, player2);
             }
         }
         if (playerButton.equals("player2")) {
-            System.out.println("score button 2");
             player2 = tiebreakService.changeTiebreakScore(playerButton, matchBoardDto);
-            System.out.println(player1.getGames() + " player 2 games");
             if (player1.getPoints() == (player2.getPoints() - 2)) {
                 tiebreak = false;
 
@@ -114,17 +105,13 @@ public class MatchScoreService {
     }
 
     public synchronized MatchBoardDto changeScore(String playerButton, MatchBoardDto matchBoardDto) {
-        System.out.println("matchBoard: " + matchBoardDto);
         PlayerScoreDto player1 = matchBoardDto.playerScoreDto1();
         PlayerScoreDto player2 = matchBoardDto.playerScoreDto2();
-        System.out.println(player1);
-        System.out.println(player2);
         boolean goTiebreak = (player1.getGames() == 6) &&
                 (player2.getGames() == 6);
         if (goTiebreak && tiebreak != true) {
             tiebreak = true;
             manager.playersSetGamesAndPoints0(player1, player2);
-            System.out.println("tiebreak GET STARTED");
         }
         if (tiebreak == false) {
             changeScoreWithoutTiebreak(playerButton, matchBoardDto);
@@ -135,6 +122,4 @@ public class MatchScoreService {
                 tiebreak, false);
         return matchBoardDto1;
     }
-
-
 }

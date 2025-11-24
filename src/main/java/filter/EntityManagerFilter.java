@@ -36,7 +36,6 @@ public class EntityManagerFilter implements Filter {
 
             if (transactionActive && transaction.isActive()) {
                 transaction.commit();
-                System.out.println("TRANSACTION COMMITTED SUCCESSFULLY");
                 transactionActive = false;
             }
         } catch (Exception e) {

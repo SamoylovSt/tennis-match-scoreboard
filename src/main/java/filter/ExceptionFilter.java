@@ -27,7 +27,6 @@ public class ExceptionFilter implements Filter {
 
     }
 
-
     private void handleException(Exception ex, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         if (ex instanceof MatchesException) {
@@ -43,10 +42,6 @@ public class ExceptionFilter implements Filter {
                           int code, String message) throws ServletException, IOException {
         req.setAttribute("errorCode", code);
         req.setAttribute("errorMessage", message);
-
-
         req.getRequestDispatcher("/error.jsp").forward(req, resp);
-
-
     }
 }
